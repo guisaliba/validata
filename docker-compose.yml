@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - '8080:5432'
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PORT=${PORT}
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+    volumes:
+      - ./src:/app/src
