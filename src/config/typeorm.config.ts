@@ -2,7 +2,6 @@ import { DataSource } from 'typeorm';
 import { config } from 'dotenv';
 import * as path from 'path';
 
-// Carrega as variáveis de ambiente do arquivo .env
 config();
 
 export default new DataSource({

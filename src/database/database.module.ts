@@ -2,10 +2,6 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
-/**
- * Database module that configures TypeORM connection
- * using environment variables from .env file
- */
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
@@ -19,8 +15,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         password: configService.get('DB_PASSWORD', 'postgres'),
         database: configService.get('DB_DATABASE', 'validata'),
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-        // Disable synchronize in production for data safety
-        synchronize: configService.get('NODE_ENV') !== 'production',
+        synchronize: false,
         logging: configService.get('NODE_ENV') !== 'production',
       }),
     }),
