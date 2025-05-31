@@ -8,7 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Product } from '../../products/entities/product.entity';
-import { BatchManager } from './batch_manager.entity';
+import { BatchManager } from './batch-manager.entity';
 
 @Entity()
 export class Batch {

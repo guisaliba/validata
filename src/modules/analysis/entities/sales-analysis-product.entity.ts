@@ -8,7 +8,7 @@ import {
   PrimaryColumn,
 } from 'typeorm';
 import { Product } from '../../products/entities/product.entity';
-import { SalesAnalysis } from './sales_analysis.entity';
+import { SalesAnalysis } from './sales-analysis.entity';
 
 @Entity()
 export class SalesAnalysisProduct {

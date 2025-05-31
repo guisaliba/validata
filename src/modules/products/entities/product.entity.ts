@@ -9,9 +9,9 @@ import {
 } from 'typeorm';
 import { Stock } from '../../stocks/entities/stock.entity';
 import { Batch } from '../../batches/entities/batch.entity';
-import { SaleItem } from '../../sales/entities/sale_item.entity';
+import { SaleItem } from '../../sales/entities/sale-item.entity';
 import { Discount } from '../../discounts/entities/discount.entity';
-import { SalesAnalysisProduct } from '../../analysis/entities/sales_analysis_product.entity';
+import { SalesAnalysisProduct } from '../../analysis/entities/sales-analysis-product.entity';
 
 @Entity()
 export class Product {

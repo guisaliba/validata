@@ -6,7 +6,7 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { SalesAnalysisProduct } from './sales_analysis_product.entity';
+import { SalesAnalysisProduct } from './sales-analysis-product.entity';
 
 @Entity()
 export class SalesAnalysis {

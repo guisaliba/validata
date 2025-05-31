@@ -2,14 +2,13 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
   OneToMany,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
-import { SaleItem } from './sale_item.entity';
+import { SaleItem } from './sale-item.entity';
 
 @Entity()
 export class Sale {
@@ -24,9 +23,6 @@ export class Sale {
 
   @Column('float')
   total_value: number;
-
-  @CreateDateColumn()
-  created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
