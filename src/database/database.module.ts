@@ -13,7 +13,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         port: configService.get<number>('DB_PORT', 5432),
         username: configService.get('DB_USERNAME', 'postgres'),
         password: configService.get('DB_PASSWORD', 'postgres'),
-        database: configService.get('DB_DATABASE', 'validata'),
+        database: configService.get('DB_NAME', 'validata'),
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
         synchronize: false,
         logging: configService.get('NODE_ENV') !== 'production',
