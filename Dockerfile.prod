@@ -11,6 +11,8 @@ COPY package*.json ./
 RUN npm install --omit=dev
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/tsconfig.json ./
+COPY --from=builder /app/src/config ./src/config
 
 ENV NODE_ENV=production
 EXPOSE 8000
