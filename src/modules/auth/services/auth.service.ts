@@ -41,7 +41,7 @@ export class AuthService implements IAuthService {
 
   async register(
     userData: Omit<IUser, 'id' | 'created_at' | 'updated_at'>,
-  ): Promise<Omit<IUser, 'password'>> {
+  ): Promise<IAuthResponse> {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(userData.password, salt);
 
@@ -50,7 +50,11 @@ export class AuthService implements IAuthService {
       password: hashedPassword,
     });
 
-    return user;
+    const payload: IAuthPayload = { sub: user.id, email: user.email };
+    return {
+      access_token: this.generateToken(payload),
+      user,
+    };
   }
 
   generateToken(payload: IAuthPayload): string {

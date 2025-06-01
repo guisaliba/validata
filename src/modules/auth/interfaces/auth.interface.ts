@@ -18,6 +18,6 @@ export interface IAuthService {
   login(email: string, password: string): Promise<IAuthResponse>;
   register(
     userData: Omit<IUser, 'id' | 'created_at' | 'updated_at'>,
-  ): Promise<Omit<IUser, 'password'>>;
+  ): Promise<IAuthResponse>;
   generateToken(payload: IAuthPayload): string;
 }
