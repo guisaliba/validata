@@ -1,4 +1,4 @@
-import { IUser } from '../../users/interfaces/user.interface';
+import { IUser } from '../../user/interfaces/user.interface';
 
 export interface IAuthPayload {
   sub: number;
