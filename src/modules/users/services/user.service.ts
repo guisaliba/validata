@@ -7,7 +7,7 @@ import { UserRepository } from '../repositories/user.repository';
 import { IUserService, IUser } from '../interfaces/user.interface';
 
 @Injectable()
-export class UsersService implements IUserService {
+export class UserService implements IUserService {
   constructor(private readonly userRepository: UserRepository) {}
 
   async findById(id: number): Promise<IUser | null> {
