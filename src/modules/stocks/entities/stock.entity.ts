@@ -5,7 +5,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  JoinColumn,
 } from 'typeorm';
 import { Product } from '../../products/entities/product.entity';
 
@@ -14,22 +13,18 @@ export class Stock {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  product_id: string;
+  @ManyToOne(() => Product, (product) => product.stocks)
+  product: Product;
 
   @Column('int')
   quantity: number;
 
-  @Column('date')
-  entry_date: Date;
+  @Column({ type: 'date' })
+  expiration_date: Date;
 
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
-
-  @ManyToOne(() => Product)
-  @JoinColumn({ name: 'product_id' })
-  product: Product;
 }

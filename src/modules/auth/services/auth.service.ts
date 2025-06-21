@@ -1,23 +1,23 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UsersService } from '../../user/services/user.service';
+import { UserService } from '../../users/services/user.service';
 import {
   IAuthService,
   IAuthPayload,
   IAuthResponse,
 } from '../interfaces/auth.interface';
 import * as bcrypt from 'bcrypt';
-import { IUser } from 'src/modules/user/interfaces/user.interface';
+import { IUser } from 'src/modules/users/interfaces/user.interface';
 
 @Injectable()
 export class AuthService implements IAuthService {
   constructor(
-    private readonly usersService: UsersService,
+    private readonly userService: UserService,
     private readonly jwtService: JwtService,
   ) {}
 
   async validateUser(email: string, password: string) {
-    const user = await this.usersService.findByEmail(email);
+    const user = await this.userService.findByEmail(email);
 
     if (user && (await bcrypt.compare(password, user.password))) {
       return user;
@@ -45,7 +45,7 @@ export class AuthService implements IAuthService {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(userData.password, salt);
 
-    const user = await this.usersService.create({
+    const user = await this.userService.create({
       ...userData,
       password: hashedPassword,
     });
