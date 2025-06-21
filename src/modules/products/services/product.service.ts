@@ -26,6 +26,10 @@ export class ProductService implements IProductService {
     return product;
   }
 
+  async findByBarcode(barcode: string): Promise<Product | null> {
+    return this.productRepository.findByBarcode(barcode);
+  }
+
   async update(
     id: string,
     updateProductDto: UpdateProductDto,
