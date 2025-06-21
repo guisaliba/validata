@@ -17,6 +17,10 @@ export class ProductRepository implements IProductRepository {
     return this.repository.findOneBy({ id });
   }
 
+  async findByBarcode(barcode: string): Promise<Product | null> {
+    return this.repository.findOneBy({ barcode });
+  }
+
   async findAll(): Promise<Product[]> {
     return this.repository.find();
   }

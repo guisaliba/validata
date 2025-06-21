@@ -7,6 +7,13 @@ export class CreateProductDto {
 
   @IsString()
   @IsNotEmpty()
+  barcode: string;
+
+  @IsString()
+  brand: string;
+
+  @IsString()
+  @IsNotEmpty()
   category: string;
 
   @IsNumber()

@@ -31,6 +31,11 @@ export class ProductController {
     return this.productService.findOne(id);
   }
 
+  @Get('/barcode/:barcode')
+  async findByBarcode(@Param('barcode') barcode: string): Promise<Product> {
+    return await this.productService.findByBarcode(barcode);
+  }
+
   @Patch(':id')
   update(
     @Param('id') id: string,
