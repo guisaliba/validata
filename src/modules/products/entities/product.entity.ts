@@ -8,7 +8,6 @@ import {
   OneToOne,
 } from 'typeorm';
 import { Stock } from '../../stocks/entities/stock.entity';
-import { Batch } from '../../batches/entities/batch.entity';
 import { SaleItem } from '../../sales/entities/sale-item.entity';
 import { Discount } from '../../discounts/entities/discount.entity';
 import { SalesAnalysisProduct } from '../../analysis/entities/sales-analysis-product.entity';
@@ -38,9 +37,6 @@ export class Product {
 
   @OneToMany(() => Stock, (stock) => stock.product)
   stocks: Stock[];
-
-  @OneToMany(() => Batch, (batch) => batch.product)
-  batches: Batch[];
 
   @OneToMany(() => SaleItem, (saleItem) => saleItem.product)
   saleItems: SaleItem[];
