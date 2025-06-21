@@ -18,7 +18,13 @@ export class Product {
   id: string;
 
   @Column()
+  barcode: string;
+
+  @Column()
   name: string;
+
+  @Column()
+  brand: string;
 
   @Column()
   category: string;
