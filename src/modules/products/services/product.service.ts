@@ -26,8 +26,13 @@ export class ProductService implements IProductService {
     return product;
   }
 
-  async findByBarcode(barcode: string): Promise<Product | null> {
-    return this.productRepository.findByBarcode(barcode);
+  async findByBarcode(barcode: string): Promise<Product> {
+    const product = await this.productRepository.findByBarcode(barcode);
+    if (!product) {
+      throw new NotFoundException(`Product with barcode ${barcode} not found`);
+    }
+
+    return product;
   }
 
   async update(

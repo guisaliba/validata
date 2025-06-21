@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  NotFoundException,
 } from '@nestjs/common';
 import { ProductService } from '../services/product.service';
 import { CreateProductDto } from '../dto/create-product.dto';
@@ -34,13 +33,7 @@ export class ProductController {
 
   @Get('/barcode/:barcode')
   async findByBarcode(@Param('barcode') barcode: string): Promise<Product> {
-    const product = await this.productService.findByBarcode(barcode);
-
-    if (!product) {
-      throw new NotFoundException(`Product with barcode ${barcode} not found`);
-    }
-
-    return product;
+    return await this.productService.findByBarcode(barcode);
   }
 
   @Patch(':id')
