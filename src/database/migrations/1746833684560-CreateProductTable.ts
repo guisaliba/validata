@@ -30,6 +30,7 @@ export class CreateProductTable1746833684560 implements MigrationInterface {
           {
             name: 'sales_frequency',
             type: 'float',
+            default: '0',
           },
           {
             name: 'created_at',
