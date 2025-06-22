@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Product } from '../../products/entities/product.entity';
 
@@ -13,7 +14,11 @@ export class Stock {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column('uuid')
+  productId: string;
+
   @ManyToOne(() => Product, (product) => product.stocks)
+  @JoinColumn({ name: 'productId' })
   product: Product;
 
   @Column('int')

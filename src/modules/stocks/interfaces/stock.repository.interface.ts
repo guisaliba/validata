@@ -6,6 +6,7 @@ export interface IStockRepository {
   findById(id: string): Promise<Stock | null>;
   findAll(): Promise<Stock[]>;
   findAllAvailable(): Promise<Stock[]>;
+  findByProduct(productId: string): Promise<Stock[]>;
   create(stockData: CreateStockDto): Promise<Stock>;
   update(id: string, stockData: UpdateStockDto): Promise<Stock | null>;
   delete(id: string): Promise<void>;
