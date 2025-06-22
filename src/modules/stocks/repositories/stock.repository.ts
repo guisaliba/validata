@@ -3,8 +3,8 @@ import type { IStockRepository } from '../interfaces/stock.repository.interface'
 import { InjectRepository } from '@nestjs/typeorm';
 import { Stock } from '../entities/stock.entity';
 import { MoreThan, type Repository } from 'typeorm';
-import type { CreateStockDto } from '../dto/create-stock.dto';
-import type { UpdateStockDto } from '../dto/update-stock.dto';
+import { CreateStockDto } from '../dto/create-stock.dto';
+import { UpdateStockDto } from '../dto/update-stock.dto';
 
 @Injectable()
 export class StockRepository implements IStockRepository {
@@ -14,15 +14,30 @@ export class StockRepository implements IStockRepository {
   ) {}
 
   async findById(id: string): Promise<Stock | null> {
-    return this.repository.findOneBy({ id });
+    return this.repository.findOne({
+      where: { id },
+      relations: ['product'],
+    });
   }
 
   async findAll(): Promise<Stock[]> {
-    return this.repository.find();
+    return this.repository.find({
+      relations: ['product'],
+    });
   }
 
   async findAllAvailable(): Promise<Stock[]> {
-    return this.repository.find({ where: { quantity: MoreThan(0) } });
+    return this.repository.find({ 
+      where: { quantity: MoreThan(0) },
+      relations: ['product'],
+    });
+  }
+
+  async findByProduct(productId: string): Promise<Stock[]> {
+    return this.repository.find({
+      where: { productId: productId },
+      relations: ['product'],
+    });
   }
 
   async create(stockData: CreateStockDto): Promise<Stock> {

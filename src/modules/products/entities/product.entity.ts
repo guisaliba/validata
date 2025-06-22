@@ -32,7 +32,7 @@ export class Product {
   @Column('float')
   base_price: number;
 
-  @Column('float')
+  @Column('float', { default: 0 })
   sales_frequency: number;
 
   @CreateDateColumn()

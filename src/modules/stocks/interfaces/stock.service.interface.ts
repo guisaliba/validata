@@ -5,7 +5,9 @@ import type { Stock } from '../entities/stock.entity';
 export interface IStockService {
   create(createStockDto: CreateStockDto): Promise<Stock>;
   findAll(): Promise<Stock[]>;
+  findAllAvailable(): Promise<Stock[]>;
   findOne(id: string): Promise<Stock>;
+  findByProduct(productId: string): Promise<Stock[]>;
   update(id: string, updateStockDto: UpdateStockDto): Promise<Stock>;
   remove(id: string): Promise<void>;
 }

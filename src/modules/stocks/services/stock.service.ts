@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import type { IStockService } from '../interfaces/stock.service.interface';
 import { CreateStockDto } from '../dto/create-stock.dto';
 import { Stock } from '../entities/stock.entity';
-import type { UpdateStockDto } from '../dto/update-stock.dto';
-import type { StockRepository } from '../repositories/stock.repository';
+import { UpdateStockDto } from '../dto/update-stock.dto';
+import { StockRepository } from '../repositories/stock.repository';
 
 @Injectable()
 export class StockService implements IStockService {
@@ -28,6 +28,10 @@ export class StockService implements IStockService {
     }
 
     return stock;
+  }
+
+  async findByProduct(productId: string): Promise<Stock[]> {
+    return await this.stockRepository.findByProduct(productId);
   }
 
   async update(id: string, updateStockDto: UpdateStockDto): Promise<Stock> {

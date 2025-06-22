@@ -7,10 +7,10 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import type { CreateStockDto } from '../dto/create-stock.dto';
-import type { Stock } from '../entities/stock.entity';
-import type { StockService } from '../services/stock.service';
-import type { UpdateStockDto } from '../dto/update-stock.dto';
+import { CreateStockDto } from '../dto/create-stock.dto';
+import { Stock } from '../entities/stock.entity';
+import { StockService } from '../services/stock.service';
+import { UpdateStockDto } from '../dto/update-stock.dto';
 
 @Controller('stocks')
 export class StockController {
@@ -29,6 +29,11 @@ export class StockController {
   @Get('available')
   findAllAvailable(): Promise<Stock[]> {
     return this.stockService.findAllAvailable();
+  }
+
+  @Get('product/:productId')
+  findByProduct(@Param('productId') productId: string): Promise<Stock[]> {
+    return this.stockService.findByProduct(productId);
   }
 
   @Get(':id')
