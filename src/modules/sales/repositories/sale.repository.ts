@@ -15,8 +15,7 @@ export class SaleRepository extends BaseRepository implements ISaleRepository {
 
   async create(saleData: CreateSaleDto): Promise<Sale> {
     const repo = this.getRepository(Sale);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    const sale = repo.create(saleData) as Sale;
+    const sale = repo.create(saleData);
 
     return repo.save(sale);
   }

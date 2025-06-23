@@ -1,35 +1,50 @@
-import { Injectable } from '@nestjs/common';
-import { DataSource, Repository } from 'typeorm';
+import { Injectable, Scope, Inject } from '@nestjs/common';
+import { REQUEST } from '@nestjs/core';
+import { DataSource } from 'typeorm';
+import { Request } from 'express';
 import { Product } from '../entities/product.entity';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { UpdateProductDto } from '../dto/update-product.dto';
+import { IProductRepository } from '../interfaces/product.interface';
+import { BaseRepository } from '../../../common/base-repository';
 
-@Injectable()
-export class ProductRepository extends Repository<Product> {
-  constructor(private dataSource: DataSource) {
-    super(Product, dataSource.createEntityManager());
+@Injectable({ scope: Scope.REQUEST })
+export class ProductRepository
+  extends BaseRepository
+  implements IProductRepository
+{
+  constructor(dataSource: DataSource, @Inject(REQUEST) req: Request) {
+    super(dataSource, req);
   }
 
   async findById(id: string): Promise<Product | null> {
-    return this.findOneBy({ id });
+    return this.getRepository(Product).findOneBy({ id });
   }
 
   async findByBarcode(barcode: string): Promise<Product | null> {
-    return this.findOneBy({ barcode });
+    return this.getRepository(Product).findOneBy({ barcode });
   }
 
-  async createProduct(productData: CreateProductDto): Promise<Product> {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    const product = this.create(productData) as Product;
-    return this.save(product);
+  async findAll(): Promise<Product[]> {
+    return this.getRepository(Product).find();
   }
 
-  async updateProduct(
+  async create(productData: CreateProductDto): Promise<Product> {
+    const repo = this.getRepository(Product);
+    const product = repo.create(productData);
+    return repo.save(product);
+  }
+
+  async update(
     id: string,
     productData: UpdateProductDto,
   ): Promise<Product | null> {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    await this.update(id, productData);
-    return this.findById(id);
+    const repo = this.getRepository(Product);
+    await repo.update(id, productData);
+    return repo.findOneBy({ id });
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.getRepository(Product).delete(id);
   }
 }
