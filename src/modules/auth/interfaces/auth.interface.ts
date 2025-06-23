@@ -1,7 +1,7 @@
 import { IUser } from '../../users/interfaces/user.interface';
 
 export interface IAuthPayload {
-  sub: number;
+  sub: string;
   email: string;
 }
 
