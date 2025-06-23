@@ -40,7 +40,7 @@ export class ProductService implements IProductService {
     updateProductDto: UpdateProductDto,
   ): Promise<Product> {
     await this.findOne(id);
-    const updatedProduct = await this.productRepository.update(
+    const updatedProduct = await this.productRepository.updateUser(
       id,
       updateProductDto,
     );
