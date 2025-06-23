@@ -1,38 +1,53 @@
-import { Injectable } from '@nestjs/common';
-import { IUserRepository, IUser } from '../interfaces/user.interface';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Inject, Injectable, NotFoundException, Scope } from '@nestjs/common';
+import { DataSource } from 'typeorm';
 import { User } from '../entities/user.entity';
+import { BaseRepository } from 'src/common/base-repository';
+import { REQUEST } from '@nestjs/core';
+import type { Request } from 'express';
+import type { IUser, IUserRepository } from '../interfaces/user.interface';
 
-@Injectable()
-export class UserRepository implements IUserRepository {
-  constructor(
-    @InjectRepository(User)
-    private readonly repository: Repository<User>,
-  ) {}
+@Injectable({ scope: Scope.REQUEST })
+export class UserRepository extends BaseRepository implements IUserRepository {
+  constructor(dataSource: DataSource, @Inject(REQUEST) req: Request) {
+    super(dataSource, req);
+  }
 
-  async findById(id: number): Promise<IUser | null> {
-    return this.repository.findOneBy({ id });
+  async findById(id: string): Promise<IUser | null> {
+    return this.getRepository(User).findOneBy({ id });
   }
 
   async findByEmail(email: string): Promise<IUser | null> {
-    return this.repository.findOneBy({ email });
+    return this.getRepository(User).findOneBy({ email });
   }
 
   async create(
-    userData: Omit<IUser, 'id' | 'created_at' | 'updated_at'>,
-  ): Promise<IUser> {
-    const user = this.repository.create(userData as User);
-    return this.repository.save(user);
+    userData: Omit<
+      User,
+      'id' | 'created_at' | 'updated_at' | 'stocks' | 'sales'
+    >,
+  ): Promise<User> {
+    const userRepo = this.getRepository(User);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    const newUser = userRepo.create(userData) as User;
+
+    return userRepo.save(newUser);
   }
 
-  async update(id: number, userData: Partial<IUser>): Promise<IUser | null> {
-    await this.repository.update(id, userData);
+  async update(id: string, userData: Partial<User>): Promise<User> {
+    const userRepo = this.getRepository(User);
+    const userToUpdate = await userRepo.preload({
+      id: id,
+      ...userData,
+    });
 
-    return this.findById(id);
+    if (!userToUpdate) {
+      throw new NotFoundException(`User with ID ${id} not found.`);
+    }
+
+    return userRepo.save(userToUpdate);
   }
 
-  async delete(id: number): Promise<void> {
-    await this.repository.delete(id);
+  async delete(id: string) {
+    await this.getRepository(User).delete({ id });
   }
 }

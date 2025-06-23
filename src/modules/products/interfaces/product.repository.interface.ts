@@ -5,7 +5,10 @@ import { UpdateProductDto } from '../dto/update-product.dto';
 export interface IProductRepository {
   findById(id: string): Promise<Product | null>;
   findAll(): Promise<Product[]>;
-  create(productData: CreateProductDto): Promise<Product>;
-  update(id: string, productData: UpdateProductDto): Promise<Product | null>;
-  delete(id: string): Promise<void>;
+  createProduct(productData: CreateProductDto): Promise<Product>;
+  updateProduct(
+    id: string,
+    productData: UpdateProductDto,
+  ): Promise<Product | null>;
+  deleteProduct(id: string): Promise<void>;
 }
