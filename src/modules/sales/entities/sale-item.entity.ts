@@ -24,7 +24,7 @@ export class SaleItem {
   @Column('int')
   quantity: number;
 
-  @Column('int')
+  @Column('float')
   unit_price: number;
 
   @CreateDateColumn()

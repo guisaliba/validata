@@ -9,6 +9,6 @@ import { ProductRepository } from './repositories/product.repository';
   imports: [TypeOrmModule.forFeature([Product])],
   controllers: [ProductController],
   providers: [ProductService, ProductRepository],
-  exports: [ProductService, ProductRepository],
+  exports: [ProductService],
 })
 export class ProductsModule {}

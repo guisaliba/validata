@@ -29,7 +29,7 @@ export class Product {
   @Column()
   category: string;
 
-  @Column('int')
+  @Column('float')
   base_price: number;
 
   @Column('float', { default: 0 })

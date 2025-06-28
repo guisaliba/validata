@@ -16,12 +16,12 @@ export class Sale {
   id: string;
 
   @Column()
-  user_id: string;
+  user_id: number;
 
   @Column('date')
   sale_date: Date;
 
-  @Column('int')
+  @Column('float')
   total_value: number;
 
   @UpdateDateColumn()

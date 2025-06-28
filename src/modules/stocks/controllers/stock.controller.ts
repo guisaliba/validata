@@ -27,8 +27,8 @@ export class StockController {
   }
 
   @Get('available')
-  findAllAvailable(@Param('productId') productId: string): Promise<Stock[]> {
-    return this.stockService.findAvailableByProduct(productId);
+  findAllAvailable(): Promise<Stock[]> {
+    return this.stockService.findAllAvailable();
   }
 
   @Get('product/:productId')

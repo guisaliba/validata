@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Product } from '../entities/product.entity';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { UpdateProductDto } from '../dto/update-product.dto';
-import { IProductService } from '../interfaces/product.interface';
+import { IProductService } from '../interfaces/product.service.interface';
 import { ProductRepository } from '../repositories/product.repository';
 
 @Injectable()
@@ -22,6 +22,7 @@ export class ProductService implements IProductService {
     if (!product) {
       throw new NotFoundException(`Product with ID ${id} not found`);
     }
+
     return product;
   }
 
@@ -30,6 +31,7 @@ export class ProductService implements IProductService {
     if (!product) {
       throw new NotFoundException(`Product with barcode ${barcode} not found`);
     }
+
     return product;
   }
 
@@ -45,6 +47,7 @@ export class ProductService implements IProductService {
     if (!updatedProduct) {
       throw new NotFoundException(`Product with ID ${id} not found`);
     }
+
     return updatedProduct;
   }
 
