@@ -1,46 +1,50 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Injectable, Scope, Inject } from '@nestjs/common';
+import { REQUEST } from '@nestjs/core';
+import { DataSource } from 'typeorm';
+import { Request } from 'express';
 import { Product } from '../entities/product.entity';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { UpdateProductDto } from '../dto/update-product.dto';
-import { IProductRepository } from '../interfaces/product.repository.interface';
+import { IProductRepository } from '../interfaces/product.interface';
+import { BaseRepository } from '../../../common/base-repository';
 
-@Injectable()
-export class ProductRepository implements IProductRepository {
-  constructor(
-    @InjectRepository(Product)
-    private readonly repository: Repository<Product>,
-  ) {}
+@Injectable({ scope: Scope.REQUEST })
+export class ProductRepository
+  extends BaseRepository
+  implements IProductRepository
+{
+  constructor(dataSource: DataSource, @Inject(REQUEST) req: Request) {
+    super(dataSource, req);
+  }
 
   async findById(id: string): Promise<Product | null> {
-    return this.repository.findOneBy({ id });
+    return this.getRepository(Product).findOneBy({ id });
   }
 
   async findByBarcode(barcode: string): Promise<Product | null> {
-    return this.repository.findOneBy({ barcode });
+    return this.getRepository(Product).findOneBy({ barcode });
   }
 
   async findAll(): Promise<Product[]> {
-    return this.repository.find();
+    return this.getRepository(Product).find();
   }
 
   async create(productData: CreateProductDto): Promise<Product> {
-    const product = this.repository.create(productData);
-
-    return this.repository.save(product);
+    const repo = this.getRepository(Product);
+    const product = repo.create(productData);
+    return repo.save(product);
   }
 
   async update(
     id: string,
     productData: UpdateProductDto,
   ): Promise<Product | null> {
-    await this.repository.update(id, productData);
-
-    return this.findById(id);
+    const repo = this.getRepository(Product);
+    await repo.update(id, productData);
+    return repo.findOneBy({ id });
   }
 
   async delete(id: string): Promise<void> {
-    await this.repository.delete(id);
+    await this.getRepository(Product).delete(id);
   }
 }
