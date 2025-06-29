@@ -6,6 +6,7 @@ import { UsersModule } from '../users/users.module';
 import { Sale } from './entities/sale.entity';
 import { SaleItem } from './entities/sale-item.entity';
 import { SaleRepository } from './repositories/sale.repository';
+import { SaleItemRepository } from './repositories/sale-item.repository';
 import { SaleService } from './services/sale.service';
 import { SaleController } from './controllers/sales.controller';
 
@@ -16,7 +17,7 @@ import { SaleController } from './controllers/sales.controller';
     UsersModule,
     TypeOrmModule.forFeature([Sale, SaleItem]),
   ],
-  providers: [SaleRepository, SaleService],
+  providers: [SaleRepository, SaleItemRepository, SaleService],
   controllers: [SaleController],
 })
 export class SalesModule {}

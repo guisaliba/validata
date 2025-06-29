@@ -4,8 +4,8 @@ import { Sale } from '../entities/sale.entity';
 import { StockService } from 'src/modules/stocks/services/stock.service';
 import { SaleRepository } from '../repositories/sale.repository';
 import { SaleItemRepository } from '../repositories/sale-item.repository';
-import type { ProductRepository } from 'src/modules/products/repositories/product.repository';
-import type { UserRepository } from 'src/modules/users/repositories/user.repository';
+import { ProductRepository } from 'src/modules/products/repositories/product.repository';
+import { UserRepository } from 'src/modules/users/repositories/user.repository';
 
 @Injectable()
 export class SaleService {
@@ -29,7 +29,6 @@ export class SaleService {
   async createSale(createSaleDto: CreateSaleDto): Promise<Sale | null> {
     const { userId, items } = createSaleDto;
 
-    // Validate user
     const user = await this.userRepository.findById(userId);
     if (!user) {
       throw new NotFoundException(`User with ID ${userId} not found.`);
@@ -60,5 +59,17 @@ export class SaleService {
 
     // Return sale with relations if needed
     return await this.saleRepository.findByIdWithRelations(sale.id);
+  }
+
+  async findAll(): Promise<Sale[]> {
+    return this.saleRepository.findAll();
+  }
+
+  async findOneWithRelations(id: string): Promise<Sale | null> {
+    const sale = await this.saleRepository.findByIdWithRelations(id);
+    if (!sale) {
+      throw new NotFoundException(`Sale with ID ${id} not found.`);
+    }
+    return sale;
   }
 }

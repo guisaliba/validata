@@ -31,7 +31,9 @@ export class StockRepository
   }
 
   async findAll() {
-    return this.getRepository(Stock).find();
+    return this.getRepository(Stock).find({
+      relations: ['product'],
+    });
   }
 
   async findAllAvailableByProduct(productId: string): Promise<Stock[]> {

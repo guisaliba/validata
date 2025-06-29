@@ -9,7 +9,7 @@ export interface IUser {
   type: UserType;
   created_at: Date;
   updated_at: Date;
-  sales: Sale[];
+  sales?: Sale[];
 }
 
 export interface IUserRepository {

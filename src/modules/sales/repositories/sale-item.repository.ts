@@ -18,8 +18,8 @@ export class SaleItemRepository
 
   async create(saleItemData: CreateSaleItemDto): Promise<SaleItem> {
     const repo = this.getRepository(SaleItem);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    const saleItem = repo.create(saleItemData) as SaleItem;
+
+    const saleItem = repo.create(saleItemData);
     return repo.save(saleItem);
   }
 

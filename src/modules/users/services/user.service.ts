@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { UserRepository } from '../repositories/user.repository';
 import { IUserService, IUser } from '../interfaces/user.interface';
+import { User } from '../entities/user.entity';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -60,6 +61,7 @@ export class UserService implements IUserService {
 
   async delete(id: string): Promise<void> {
     const user = await this.findById(id);
-    await this.userRepository.remove(user);
+
+    await this.userRepository.remove(user as User);
   }
 }
