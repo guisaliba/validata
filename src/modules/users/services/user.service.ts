@@ -10,18 +10,28 @@ import { IUserService, IUser } from '../interfaces/user.interface';
 export class UserService implements IUserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async findById(id: string): Promise<IUser | null> {
+  async findById(id: string): Promise<IUser> {
     const user = await this.userRepository.findById(id);
-
     if (!user) {
-      throw new NotFoundException(`User not found`);
+      throw new NotFoundException(`User with ID ${id} not found.`);
     }
 
     return user;
   }
 
   async findByEmail(email: string): Promise<IUser | null> {
-    return this.userRepository.findByEmail(email);
+    const user = await this.userRepository.findByEmail(email);
+    if (!user) {
+      throw new NotFoundException(`User with email ${email} not found.`);
+    }
+
+    return user;
+  }
+
+  async findAll(): Promise<IUser[]> {
+    const users = await this.userRepository.findAll();
+
+    return users;
   }
 
   async create(
@@ -42,14 +52,14 @@ export class UserService implements IUserService {
     const updatedUser = await this.userRepository.update(id, userData);
 
     if (!updatedUser) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException(`User with ID ${id} not found.`);
     }
 
     return updatedUser;
   }
 
   async delete(id: string): Promise<void> {
-    await this.findById(id);
-    await this.userRepository.delete(id);
+    const user = await this.findById(id);
+    await this.userRepository.remove(user);
   }
 }

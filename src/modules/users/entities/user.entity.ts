@@ -38,6 +38,9 @@ export class User {
   @UpdateDateColumn({ name: 'updated_at' })
   updated_at: Date;
 
-  @OneToMany(() => Sale, (sale) => sale.user)
+  @OneToMany(() => Sale, (sale) => sale.user, {
+    cascade: ['remove'],
+    onDelete: 'CASCADE',
+  })
   sales: Sale[];
 }

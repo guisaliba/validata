@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException, Scope } from '@nestjs/common';
+import { Inject, Injectable, Scope } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { BaseRepository } from 'src/common/base-repository';
@@ -12,6 +12,10 @@ export class UserRepository extends BaseRepository implements IUserRepository {
     super(dataSource, req);
   }
 
+  async findAll(): Promise<IUser[]> {
+    return this.getRepository(User).find();
+  }
+
   async findById(id: string): Promise<IUser | null> {
     return this.getRepository(User).findOneBy({ id });
   }
@@ -21,19 +25,15 @@ export class UserRepository extends BaseRepository implements IUserRepository {
   }
 
   async create(
-    userData: Omit<
-      User,
-      'id' | 'created_at' | 'updated_at' | 'stocks' | 'sales'
-    >,
-  ): Promise<User> {
+    userData: Omit<IUser, 'id' | 'created_at' | 'updated_at'>,
+  ): Promise<IUser> {
     const userRepo = this.getRepository(User);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    const newUser = userRepo.create(userData) as User;
+    const newUser = userRepo.create(userData);
 
     return userRepo.save(newUser);
   }
 
-  async update(id: string, userData: Partial<User>): Promise<User> {
+  async update(id: string, userData: Partial<IUser>): Promise<IUser | null> {
     const userRepo = this.getRepository(User);
     const userToUpdate = await userRepo.preload({
       id: id,
@@ -41,13 +41,17 @@ export class UserRepository extends BaseRepository implements IUserRepository {
     });
 
     if (!userToUpdate) {
-      throw new NotFoundException(`User with ID ${id} not found.`);
+      return null;
     }
 
     return userRepo.save(userToUpdate);
   }
 
-  async delete(id: string) {
-    await this.getRepository(User).delete({ id });
+  async save(user: User): Promise<User> {
+    return this.getRepository(User).save(user);
+  }
+
+  async remove(user: User): Promise<void> {
+    await this.getRepository(User).remove(user);
   }
 }
