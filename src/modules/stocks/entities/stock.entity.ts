@@ -35,7 +35,7 @@ export class Stock {
   product: Product;
 
   @OneToMany(() => SaleItem, (saleItem) => saleItem.stock)
-  saleItems: SaleItem[];
+  sale_items: SaleItem[];
 
   @Column('int')
   @IsNumber()
@@ -129,9 +129,9 @@ export class Stock {
 
     if (days <= 1) {
       return 0; // Use minimum profit margin (protective threshold)
-    } else if (days <= 5) {
+    } else if (days <= 3) {
       return 15; // 15% discount - expires within 5 days
-    } else if (days <= 10) {
+    } else if (days <= 7) {
       return 10; // 10% discount - expires within 10 days
     } else if (days <= 15) {
       return 5; // 5% discount - expires within 15 days
@@ -149,10 +149,10 @@ export class Stock {
     const days = this.daysUntilExpiration;
 
     if (days <= 1) {
+      return DiscountUrgency.ULTRA;
+    } else if (days <= 3) {
       return DiscountUrgency.HIGH;
-    } else if (days <= 5) {
-      return DiscountUrgency.HIGH;
-    } else if (days <= 10) {
+    } else if (days <= 7) {
       return DiscountUrgency.MEDIUM;
     } else if (days <= 15) {
       return DiscountUrgency.LOW;

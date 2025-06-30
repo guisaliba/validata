@@ -56,11 +56,11 @@ export class SaleItem {
   @JoinColumn({ name: 'sale_id' })
   sale: Sale;
 
-  @ManyToOne(() => Product, (product) => product.saleItems)
+  @ManyToOne(() => Product, (product) => product.sale_items)
   @JoinColumn({ name: 'product_id' })
   product: Product;
 
-  @ManyToOne(() => Stock, (stock) => stock.saleItems)
+  @ManyToOne(() => Stock, (stock) => stock.sale_items)
   @JoinColumn({ name: 'stock_id' })
   stock: Stock;
 

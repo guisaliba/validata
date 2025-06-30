@@ -57,7 +57,7 @@ export class Product {
   @Column({ nullable: true })
   @IsNumber()
   @IsPositive()
-  cost_price?: number;
+  cost_price: number;
 
   @Column('int', { default: 0 })
   @IsNumber()
@@ -90,7 +90,7 @@ export class Product {
   @OneToMany(() => SaleItem, (saleItem) => saleItem.product, {
     onDelete: 'RESTRICT',
   })
-  saleItems: SaleItem[];
+  sale_items: SaleItem[];
 
   @OneToOne(() => Discount, (discount) => discount.product, {
     cascade: ['remove'],
@@ -107,6 +107,16 @@ export class Product {
       // Reset base_price if cost_price is invalid
       this.base_price = 0;
     }
+  }
+
+  get costPrice(): number {
+    if (this.cost_price && this.cost_price > 0) {
+      return this.cost_price;
+    }
+
+    throw new Error(
+      `Missing cost price for product ${this.name}, cost price is required`,
+    );
   }
 
   get baseSellingPrice(): number {
@@ -201,11 +211,7 @@ export class Product {
     return this.calculateMinimumAllowedPrice(profitMarginThreshold) / 100;
   }
 
-  get costPriceInBRL(): number | null {
-    if (!this.cost_price) {
-      return null;
-    }
-
+  get costPriceInBRL(): number {
     return this.cost_price / 100;
   }
 
