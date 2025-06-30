@@ -1,5 +1,6 @@
 export enum DiscountUrgency {
-  LOW = 'low',
-  MEDIUM = 'medium',
+  ULTRA = 'ultra',
   HIGH = 'high',
+  MEDIUM = 'medium',
+  LOW = 'low',
 }
