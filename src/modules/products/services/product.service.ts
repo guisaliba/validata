@@ -162,7 +162,7 @@ export class ProductService implements IProductService {
       maxDiscountAmount,
       maxDiscountPercentage: Math.round(maxDiscountPercentage * 100) / 100,
       hasDiscountedStock,
-      costPriceInBRL: product.costPriceInBRL!,
+      costPriceInBRL: product.costPriceInBRL,
       basePriceInBRL: product.baseSellingPriceInBRL,
       minimumPriceInBRL: product.getMinimumAllowedPriceInBRL(
         profitMarginThreshold,

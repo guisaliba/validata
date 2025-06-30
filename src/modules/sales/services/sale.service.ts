@@ -94,6 +94,8 @@ export class SaleService implements ISaleService {
       productName: product.name,
       brand: product.brand,
       category: product.category,
+      costPrice: product.costPrice,
+      costPriceInBRL: product.costPriceInBRL,
       basePrice: product.baseSellingPrice,
       basePriceInBRL: product.baseSellingPriceInBRL,
       availableStocks,
@@ -107,28 +109,23 @@ export class SaleService implements ISaleService {
     return this.dataSource.transaction(async (manager: EntityManager) => {
       const { userId, items } = createSaleDto;
 
-      // Validate user exists
       const user = await this.userService.findById(userId);
       if (!user) {
         throw new NotFoundException(`User with ID ${userId} not found`);
       }
 
-      // Create sale record
       const sale = await this.createSaleInTransaction(userId, manager);
 
-      // Process all sale items
       const processedItems = await this.processSaleItems(
         items,
         sale.id,
         manager,
       );
 
-      // Calculate and update total
       const totalValue = this.calculateSaleTotal(processedItems);
       sale.total_value = totalValue;
       await manager.save(Sale, sale);
 
-      // Return complete sale with relationships
       return this.saleRepository.findByIdWithRelations(sale.id);
     });
   }

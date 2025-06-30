@@ -1,6 +1,4 @@
 import {
-  forwardRef,
-  Inject,
   Injectable,
   NotFoundException,
   BadRequestException,
@@ -210,14 +208,13 @@ export class StockService implements IStockService {
     const stocks =
       await this.stockRepository.findAllAvailableByProduct(productId);
     const urgentStocks = stocks.filter(
-      (stock) => stock.discountUrgency === DiscountUrgency.HIGH,
+      (stock) => stock.discountUrgency === DiscountUrgency.ULTRA,
     );
 
     if (urgentStocks.length === 0) {
       return null;
     }
 
-    // Return stock expiring soonest
     return urgentStocks.sort(
       (a, b) => a.expiration_date.getTime() - b.expiration_date.getTime(),
     )[0];

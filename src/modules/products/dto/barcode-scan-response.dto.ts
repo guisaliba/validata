@@ -5,6 +5,8 @@ export class BarcodeScanResponseDto {
   productName: string;
   brand: string;
   category: string;
+  costPrice: number;
+  costPriceInBRL: number;
   basePrice: number;
   basePriceInBRL: number;
   availableStocks: StockForSaleDto[];
