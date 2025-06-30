@@ -7,6 +7,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { ProductsModule } from './modules/products/products.module';
 import { StocksModule } from './modules/stocks/stocks.module';
 import { SalesModule } from './modules/sales/sales.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { SalesModule } from './modules/sales/sales.module';
     }),
     DatabaseModule,
     AuthModule,
+    UsersModule,
     ProductsModule,
     StocksModule,
     SalesModule,

@@ -1,5 +1,7 @@
 import {
   BadRequestException,
+  forwardRef,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -9,26 +11,29 @@ import { SaleItem } from '../entities/sale-item.entity';
 import { StockService } from 'src/modules/stocks/services/stock.service';
 import { SaleRepository } from '../repositories/sale.repository';
 import { SaleItemRepository } from '../repositories/sale-item.repository';
-import type { DataSource, EntityManager } from 'typeorm';
-import type { ProductService } from 'src/modules/products/services/product.service';
-import type { UserService } from 'src/modules/users/services/user.service';
-import type { SalesSummaryDto } from '../dto/sales-summary.dto';
-import type { ProductSalesDto } from '../dto/product-sales.dto';
-import type { SaleAnalyticsDto } from '../dto/sale-analytics-dto';
-import type { ISaleService } from '../interfaces/sale.interface';
-import type { BarcodeScanResponseDto } from 'src/modules/products/dto/barcode-scan-response.dto';
-import type { StockForSaleDto } from 'src/modules/stocks/dto/stock-for-sale.dto';
-import type { CreateSaleItemDto } from '../dto/create-sale-item.dto';
-import type { ProductSalesData } from '../interfaces/product-sales-data.interface';
+import { DataSource, EntityManager } from 'typeorm';
+import { ProductService } from 'src/modules/products/services/product.service';
+import { UserService } from 'src/modules/users/services/user.service';
+import { SalesSummaryDto } from '../dto/sales-summary.dto';
+import { ProductSalesDto } from '../dto/product-sales.dto';
+import { SaleAnalyticsDto } from '../dto/sale-analytics-dto';
+import { ISaleService } from '../interfaces/sale.interface';
+import { BarcodeScanResponseDto } from 'src/modules/products/dto/barcode-scan-response.dto';
+import { StockForSaleDto } from 'src/modules/stocks/dto/stock-for-sale.dto';
+import { CreateSaleItemDto } from '../dto/create-sale-item.dto';
+import { ProductSalesData } from '../interfaces/product-sales-data.interface';
 
 @Injectable()
 export class SaleService implements ISaleService {
   constructor(
-    private readonly dataSource: DataSource,
+    @Inject(DataSource) private readonly dataSource: DataSource,
     private readonly saleRepository: SaleRepository,
     private readonly saleItemRepository: SaleItemRepository,
+    @Inject(forwardRef(() => ProductService))
     private readonly productService: ProductService,
+    @Inject(forwardRef(() => UserService))
     private readonly userService: UserService,
+    @Inject(forwardRef(() => StockService))
     private readonly stockService: StockService,
   ) {}
 

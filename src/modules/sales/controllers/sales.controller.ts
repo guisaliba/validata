@@ -9,7 +9,6 @@ import {
   ParseUUIDPipe,
   ParseIntPipe,
   UseInterceptors,
-  ParseDatePipe,
 } from '@nestjs/common';
 import { SaleService } from '../services/sale.service';
 import { CreateSaleDto } from '../dto/create-sale.dto';
@@ -53,17 +52,6 @@ export class SaleController {
     tomorrow.setDate(tomorrow.getDate() + 1);
 
     return this.saleService.getSalesSummary(today, tomorrow);
-  }
-
-  @Get('summary/date-range')
-  getSalesSummary(
-    @Query('startDate', ParseDatePipe) startDate: string,
-    @Query('endDate', ParseDatePipe) endDate: string,
-  ): Promise<SalesSummaryDto> {
-    return this.saleService.getSalesSummary(
-      new Date(startDate),
-      new Date(endDate),
-    );
   }
 
   @Get('product-by-barcode/:barcode')
