@@ -16,9 +16,9 @@ import { DiscountUrgency } from '../../discounts/enums/discount-urgency';
 import { SaleItem } from 'src/modules/sales/entities/sale-item.entity';
 
 @Entity()
-@Index(['productId'])
+@Index(['product_id'])
 @Index(['expiration_date'])
-@Index(['productId', 'expiration_date'])
+@Index(['product_id', 'expiration_date'])
 export class Stock {
   @PrimaryGeneratedColumn('uuid')
   id: string;
