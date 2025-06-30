@@ -274,11 +274,12 @@ export class SaleService implements ISaleService {
   ): Promise<SaleItem[]> {
     const saleItemRepo = manager.getRepository(SaleItem);
     const processedItems: SaleItem[] = [];
+    const stocksToCheckForRemoval: string[] = [];
 
     for (const item of items) {
       const product = await this.productService.findOne(item.productId);
 
-      const stock = await this.stockService.findById(item.stockId);
+      const stock = await this.stockService.findByIdWithProduct(item.stockId);
       if (!stock) {
         throw new NotFoundException(`Stock with ID ${item.stockId} not found`);
       }
@@ -302,8 +303,12 @@ export class SaleService implements ISaleService {
       });
 
       processedItems.push(saleItem);
+      stocksToCheckForRemoval.push(item.stockId);
+    }
 
-      await this.stockService.removeIfDepleted(item.stockId, manager);
+    // Remove depleted stocks after all sale items are saved
+    for (const stockId of stocksToCheckForRemoval) {
+      await this.stockService.removeIfDepleted(stockId, manager);
     }
 
     return processedItems;

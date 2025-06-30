@@ -46,6 +46,15 @@ export class StockService implements IStockService {
     return stock;
   }
 
+  async findByIdWithProduct(id: string): Promise<Stock> {
+    const stock = await this.stockRepository.findByIdWithProduct(id);
+    if (!stock) {
+      throw new NotFoundException(`Stock with ID ${id} not found.`);
+    }
+
+    return stock;
+  }
+
   async findExpired(): Promise<Stock[]> {
     return this.stockRepository.findExpired();
   }
