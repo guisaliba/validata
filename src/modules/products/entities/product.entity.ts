@@ -54,8 +54,9 @@ export class Product {
   @Length(1, 100)
   category: string;
 
-  @Column({ nullable: true })
+  @Column('int')
   @IsNumber()
+  @IsNotEmpty()
   @IsPositive()
   cost_price: number;
 

@@ -1,7 +1,6 @@
 import { Inject, Injectable, Scope } from '@nestjs/common';
 import {
   DataSource,
-  LessThan,
   LessThanOrEqual,
   MoreThan,
   type EntityManager,
@@ -13,6 +12,7 @@ import type { Request } from 'express';
 import type { IStockRepository } from '../interfaces/stock.interface';
 import type { CreateStockDto } from '../dto/create-stock.dto';
 import type { UpdateStockDto } from '../dto/update-stock.dto';
+import { StockStatus } from '../enums/stock-status.enum';
 
 @Injectable({ scope: Scope.REQUEST })
 export class StockRepository
@@ -26,7 +26,7 @@ export class StockRepository
   async create(stockData: CreateStockDto): Promise<Stock> {
     const repo = this.getRepository(Stock);
     const stock = repo.create({
-      product_id: stockData.productId,
+      product_id: stockData.product_id,
       quantity: stockData.quantity,
       expiration_date: stockData.expiration_date
         ? new Date(stockData.expiration_date)
@@ -47,6 +47,7 @@ export class StockRepository
       where: {
         product_id: productId,
         quantity: MoreThan(0),
+        status: StockStatus.ACTIVE,
       },
       order: {
         expiration_date: 'ASC',
@@ -91,12 +92,9 @@ export class StockRepository
   }
 
   async findExpired(): Promise<Stock[]> {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
     return this.getRepository(Stock).find({
       where: {
-        expiration_date: LessThan(today),
+        status: StockStatus.EXPIRED,
       },
       order: {
         expiration_date: 'ASC',

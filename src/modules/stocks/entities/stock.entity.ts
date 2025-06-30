@@ -11,9 +11,10 @@ import {
 } from 'typeorm';
 import { Product } from '../../products/entities/product.entity';
 import { IsDate, IsNotEmpty, IsNumber, IsString, Min } from 'class-validator';
-import { ExpirationStatus } from '../enums/expiration-status';
+import { ExpirationStatus } from '../enums/expiration-status.enum';
 import { DiscountUrgency } from '../../discounts/enums/discount-urgency';
 import { SaleItem } from 'src/modules/sales/entities/sale-item.entity';
+import { StockStatus } from '../enums/stock-status.enum';
 
 @Entity()
 @Index(['product_id'])
@@ -45,6 +46,13 @@ export class Stock {
   @Column({ type: 'date' })
   @IsDate()
   expiration_date: Date;
+
+  @Column({
+    type: 'enum',
+    enum: StockStatus,
+    default: StockStatus.ACTIVE,
+  })
+  status: StockStatus;
 
   @CreateDateColumn()
   created_at: Date;
@@ -102,8 +110,21 @@ export class Stock {
     return this.quantity > 0;
   }
 
+  get isActive(): boolean {
+    return this.status === StockStatus.ACTIVE && this.quantity > 0;
+  }
+
   get isDepleted(): boolean {
-    return this.quantity <= 0;
+    return this.status === StockStatus.DEPLETED || this.quantity === 0;
+  }
+
+  markAsDepleted(): void {
+    this.status = StockStatus.DEPLETED;
+    this.quantity = 0;
+  }
+
+  markAsExpired(): void {
+    this.status = StockStatus.EXPIRED;
   }
 
   get formattedExpirationDate(): string {

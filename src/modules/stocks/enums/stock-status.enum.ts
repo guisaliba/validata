@@ -1,0 +1,6 @@
+export enum StockStatus {
+  ACTIVE = 'ACTIVE',
+  DEPLETED = 'DEPLETED',
+  EXPIRED = 'EXPIRED',
+  DISCONTINUED = 'DISCONTINUED',
+}

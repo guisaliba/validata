@@ -72,7 +72,7 @@ export class StockService implements IStockService {
   async decrementForSale(
     stockId: string,
     quantityToDecrement: number,
-    manager?: EntityManager, // Optional transaction manager
+    manager?: EntityManager,
   ): Promise<Stock> {
     // Use repository's transaction-aware method
     const stock = await this.stockRepository.findByIdWithManager(
@@ -89,10 +89,23 @@ export class StockService implements IStockService {
       );
     }
 
+    if (quantityToDecrement === stock.quantity) {
+      stock.markAsDepleted();
+      return this.stockRepository.saveWithManager(stock, manager);
+    }
+
     stock.quantity -= quantityToDecrement;
 
     // Use repository's transaction-aware save method
     return this.stockRepository.saveWithManager(stock, manager);
+  }
+
+  async handleDepletedStock(stockId: string): Promise<void> {
+    const stock = await this.stockRepository.findById(stockId);
+    if (!stock) return;
+
+    stock.markAsDepleted();
+    await this.stockRepository.save(stock);
   }
 
   async removeIfDepleted(
@@ -112,7 +125,7 @@ export class StockService implements IStockService {
     stockId: string,
     profitMarginThreshold: number,
   ): Promise<DiscountDetailsDto | null> {
-    const stock = await this.stockRepository.findByIdWithProduct(stockId); // Load with product
+    const stock = await this.stockRepository.findByIdWithProduct(stockId);
     if (!stock) {
       throw new NotFoundException(`Stock with ID ${stockId} not found.`);
     }

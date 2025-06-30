@@ -2,7 +2,7 @@ import { IsDateString, IsInt, IsUUID, Min } from 'class-validator';
 
 export class CreateStockDto {
   @IsUUID()
-  productId: string;
+  product_id: string;
 
   @IsInt()
   @Min(1)
