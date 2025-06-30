@@ -5,6 +5,7 @@ import { Request } from 'express';
 import { SaleItem } from '../entities/sale-item.entity';
 import { BaseRepository } from '../../../common/base-repository';
 import { ISaleItemRepository } from '../interfaces/sale-item.interface';
+import { ProductSalesStatsRaw } from '../dto/product-sales-stats-raw.dto';
 
 @Injectable({ scope: Scope.REQUEST })
 export class SaleItemRepository

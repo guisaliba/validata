@@ -1,4 +1,4 @@
-interface ProductSalesStatsRaw {
+export interface ProductSalesStatsRaw {
   totalQuantitySold: string;
   totalRevenue: string;
   averagePrice: string;

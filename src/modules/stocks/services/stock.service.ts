@@ -17,9 +17,7 @@ import type { EntityManager } from 'typeorm';
 
 @Injectable()
 export class StockService implements IStockService {
-  constructor(
-    private readonly stockRepository: StockRepository,
-  ) {}
+  constructor(private readonly stockRepository: StockRepository) {}
 
   async create(createStockDto: CreateStockDto): Promise<Stock> {
     return this.stockRepository.create(createStockDto);
