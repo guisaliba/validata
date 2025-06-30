@@ -14,14 +14,11 @@ import { DiscountUrgency } from '../../discounts/enums/discount-urgency';
 import { DiscountType } from '../../discounts/enums/discount-type';
 import { DiscountDetailsDto } from '../../discounts/dto/discount-details.dto';
 import type { EntityManager } from 'typeorm';
-import { SaleService } from '../../sales/services/sale.service';
 
 @Injectable()
 export class StockService implements IStockService {
   constructor(
     private readonly stockRepository: StockRepository,
-    @Inject(forwardRef(() => SaleService))
-    private readonly saleService: SaleService,
   ) {}
 
   async create(createStockDto: CreateStockDto): Promise<Stock> {

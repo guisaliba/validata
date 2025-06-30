@@ -1,6 +1,5 @@
 import {
   BadRequestException,
-  forwardRef,
   Inject,
   Injectable,
   NotFoundException,
@@ -29,11 +28,8 @@ export class SaleService implements ISaleService {
     @Inject(DataSource) private readonly dataSource: DataSource,
     private readonly saleRepository: SaleRepository,
     private readonly saleItemRepository: SaleItemRepository,
-    @Inject(forwardRef(() => ProductService))
     private readonly productService: ProductService,
-    @Inject(forwardRef(() => UserService))
     private readonly userService: UserService,
-    @Inject(forwardRef(() => StockService))
     private readonly stockService: StockService,
   ) {}
 

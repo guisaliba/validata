@@ -26,7 +26,8 @@ export class StockRepository
   async create(stockData: CreateStockDto): Promise<Stock> {
     const repo = this.getRepository(Stock);
     const stock = repo.create({
-      ...stockData,
+      product_id: stockData.productId,
+      quantity: stockData.quantity,
       expiration_date: stockData.expiration_date
         ? new Date(stockData.expiration_date)
         : undefined,
@@ -36,7 +37,9 @@ export class StockRepository
   }
 
   async findAll(): Promise<Stock[]> {
-    return this.getRepository(Stock).find();
+    return this.getRepository(Stock).find({
+      relations: ['product'],
+    });
   }
 
   async findAllAvailableByProduct(productId: string): Promise<Stock[]> {
