@@ -1,5 +1,11 @@
 import { Inject, Injectable, Scope } from '@nestjs/common';
-import { DataSource, MoreThan } from 'typeorm';
+import {
+  DataSource,
+  LessThan,
+  LessThanOrEqual,
+  MoreThan,
+  type EntityManager,
+} from 'typeorm';
 import { Stock } from '../entities/stock.entity';
 import { BaseRepository } from 'src/common/base-repository';
 import { REQUEST } from '@nestjs/core';
@@ -19,25 +25,24 @@ export class StockRepository
 
   async create(stockData: CreateStockDto): Promise<Stock> {
     const repo = this.getRepository(Stock);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     const stock = repo.create({
       ...stockData,
       expiration_date: stockData.expiration_date
         ? new Date(stockData.expiration_date)
         : undefined,
-    }) as Stock;
+    });
 
     return repo.save(stock);
   }
 
-  async findAll() {
+  async findAll(): Promise<Stock[]> {
     return this.getRepository(Stock).find();
   }
 
   async findAllAvailableByProduct(productId: string): Promise<Stock[]> {
     return this.getRepository(Stock).find({
       where: {
-        productId,
+        product_id: productId,
         quantity: MoreThan(0),
       },
       order: {
@@ -49,7 +54,7 @@ export class StockRepository
 
   async findAllByProduct(productId: string): Promise<Stock[]> {
     return this.getRepository(Stock).find({
-      where: { productId },
+      where: { product_id: productId },
       order: { expiration_date: 'ASC' },
       relations: ['product'],
     });
@@ -57,6 +62,53 @@ export class StockRepository
 
   async findById(id: string): Promise<Stock | null> {
     return this.getRepository(Stock).findOneBy({ id });
+  }
+
+  async findByIdWithProduct(id: string): Promise<Stock | null> {
+    return this.getRepository(Stock).findOne({
+      where: { id },
+      relations: ['product'],
+    });
+  }
+
+  async findExpiringSoon(daysThreshold: number): Promise<Stock[]> {
+    const thresholdDate = new Date();
+    thresholdDate.setDate(thresholdDate.getDate() + daysThreshold);
+
+    return this.getRepository(Stock).find({
+      where: {
+        expiration_date: LessThanOrEqual(thresholdDate),
+        quantity: MoreThan(0),
+      },
+      order: {
+        expiration_date: 'ASC',
+      },
+      relations: ['product'],
+    });
+  }
+
+  async findExpired(): Promise<Stock[]> {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    return this.getRepository(Stock).find({
+      where: {
+        expiration_date: LessThan(today),
+      },
+      order: {
+        expiration_date: 'ASC',
+      },
+      relations: ['product'],
+    });
+  }
+
+  async findAllWithProducts(): Promise<Stock[]> {
+    return this.getRepository(Stock).find({
+      relations: ['product'],
+      order: {
+        expiration_date: 'ASC',
+      },
+    });
   }
 
   async update(
@@ -79,30 +131,38 @@ export class StockRepository
     return repo.save(stockToUpdate);
   }
 
+  async save(stock: Stock): Promise<Stock> {
+    return this.getRepository(Stock).save(stock);
+  }
+
   async remove(stock: Stock): Promise<void> {
     await this.getRepository(Stock).remove(stock);
   }
 
-  async decrementForSale(
-    stockId: string,
-    quantityToDecrement: number,
+  async findByIdWithManager(
+    id: string,
+    manager?: EntityManager,
   ): Promise<Stock | null> {
-    const repo = this.getRepository(Stock);
-    const stock = await repo.findOneBy({ id: stockId });
-    if (!stock) {
-      return null;
-    }
-    stock.quantity -= quantityToDecrement;
+    const repo = manager
+      ? manager.getRepository(Stock)
+      : this.getRepository(Stock);
+    return repo.findOneBy({ id });
+  }
+
+  async saveWithManager(stock: Stock, manager?: EntityManager): Promise<Stock> {
+    const repo = manager
+      ? manager.getRepository(Stock)
+      : this.getRepository(Stock);
     return repo.save(stock);
   }
 
-  async removeIfDepleted(stockId: string): Promise<boolean> {
-    const repo = this.getRepository(Stock);
-    const stock = await repo.findOneBy({ id: stockId });
-    if (stock && stock.quantity <= 0) {
-      await repo.remove(stock);
-      return true;
-    }
-    return false;
+  async removeWithManager(
+    stock: Stock,
+    manager?: EntityManager,
+  ): Promise<void> {
+    const repo = manager
+      ? manager.getRepository(Stock)
+      : this.getRepository(Stock);
+    await repo.remove(stock);
   }
 }

@@ -14,6 +14,6 @@ export class AuthController {
 
   @Post('register')
   async register(@Body() registerDto: RegisterDto) {
-    return this.authService.register(registerDto);
+    return this.authService.register({ ...registerDto, sales: [] });
   }
 }
