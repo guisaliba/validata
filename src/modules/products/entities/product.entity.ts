@@ -59,7 +59,6 @@ export class Product {
   @IsPositive()
   cost_price?: number;
 
-  // KEPT: base_price field for storage (auto-updated)
   @Column('int', { default: 0 })
   @IsNumber()
   @IsOptional()
