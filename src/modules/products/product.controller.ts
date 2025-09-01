@@ -10,13 +10,13 @@ import {
   ParseUUIDPipe,
   ParseIntPipe,
 } from '@nestjs/common';
-import { ProductService } from '../services/product.service';
-import { CreateProductDto } from '../dto/create-product.dto';
-import { UpdateProductDto } from '../dto/update-product.dto';
-import { ProductInventoryDto } from '../dto/product-inventory.dto';
-import { ProductPricingDto } from '../dto/product-pricing.dto';
-import { ProductAnalyticsDto } from '../dto/product-analytics.dto';
-import { Product } from '../entities/product.entity';
+import { ProductService } from './product.service';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
+import { ProductInventoryDto } from './dto/product-inventory.dto';
+import { ProductPricingDto } from './dto/product-pricing.dto';
+import { ProductAnalyticsDto } from './dto/product-analytics.dto';
+import { Product } from './entities/product.entity';
 
 @Controller('products')
 export class ProductController {

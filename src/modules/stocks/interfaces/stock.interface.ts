@@ -1,4 +1,4 @@
-import type { DiscountDetailsDto } from 'src/modules/discounts/dto/discount-details.dto';
+import type { DiscountDetailsDto } from '../../discounts/dto/discount-details.dto';
 import type { CreateStockDto } from '../dto/create-stock.dto';
 import type { UpdateStockDto } from '../dto/update-stock.dto';
 import type { Stock } from '../entities/stock.entity';

@@ -1,4 +1,4 @@
-import type { BarcodeScanResponseDto } from 'src/modules/products/dto/barcode-scan-response.dto';
+import type { BarcodeScanResponseDto } from '../../products/dto/barcode-scan-response.dto';
 import type { Sale } from '../entities/sale.entity';
 import type { ProductSalesDto } from '../dto/product-sales.dto';
 import type { CreateSaleDto } from '../dto/create-sale.dto';

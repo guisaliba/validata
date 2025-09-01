@@ -13,7 +13,7 @@ import { Product } from '../../products/entities/product.entity';
 import { IsDate, IsNotEmpty, IsNumber, IsString, Min } from 'class-validator';
 import { ExpirationStatus } from '../enums/expiration-status';
 import { DiscountUrgency } from '../../discounts/enums/discount-urgency';
-import { SaleItem } from 'src/modules/sales/entities/sale-item.entity';
+import { SaleItem } from '../../sales/entities/sale-item.entity';
 
 @Entity()
 @Index(['product_id'])

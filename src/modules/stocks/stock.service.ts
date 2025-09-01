@@ -3,14 +3,14 @@ import {
   NotFoundException,
   BadRequestException,
 } from '@nestjs/common';
-import { Stock } from '../entities/stock.entity';
-import { StockRepository } from '../repositories/stock.repository';
-import type { UpdateStockDto } from '../dto/update-stock.dto';
-import type { IStockService } from '../interfaces/stock.interface';
-import type { CreateStockDto } from '../dto/create-stock.dto';
-import { DiscountUrgency } from '../../discounts/enums/discount-urgency';
-import { DiscountType } from '../../discounts/enums/discount-type';
-import { DiscountDetailsDto } from '../../discounts/dto/discount-details.dto';
+import { Stock } from './entities/stock.entity';
+import { StockRepository } from './stock.repository';
+import type { UpdateStockDto } from './dto/update-stock.dto';
+import type { IStockService } from './interfaces/stock.interface';
+import type { CreateStockDto } from './dto/create-stock.dto';
+import { DiscountUrgency } from '../discounts/enums/discount-urgency';
+import { DiscountType } from '../discounts/enums/discount-type';
+import { DiscountDetailsDto } from '../discounts/dto/discount-details.dto';
 import type { EntityManager } from 'typeorm';
 
 @Injectable()

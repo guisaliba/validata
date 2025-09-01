@@ -10,12 +10,12 @@ import {
   ParseUUIDPipe,
   ParseIntPipe,
 } from '@nestjs/common';
-import { Stock } from '../entities/stock.entity';
-import { StockService } from '../services/stock.service';
-import { CreateStockDto } from '../dto/create-stock.dto';
-import { UpdateStockDto } from '../dto/update-stock.dto';
-import { StockSummaryDto } from '../../stocks/dto/stock-summary.dto';
-import { DiscountDetailsDto } from '../../discounts/dto/discount-details.dto';
+import { Stock } from './entities/stock.entity';
+import { StockService } from './stock.service';
+import { CreateStockDto } from './dto/create-stock.dto';
+import { UpdateStockDto } from './dto/update-stock.dto';
+import { StockSummaryDto } from './dto/stock-summary.dto';
+import { DiscountDetailsDto } from '../discounts/dto/discount-details.dto';
 
 @Controller('stocks')
 export class StockController {

@@ -3,8 +3,8 @@ import {
   ConflictException,
   NotFoundException,
 } from '@nestjs/common';
-import { UserRepository } from '../repositories/user.repository';
-import { IUserService, IUser } from '../interfaces/user.interface';
+import { UserRepository } from './user.repository';
+import { IUserService, IUser } from './interfaces/user.interface';
 
 @Injectable()
 export class UserService implements IUserService {

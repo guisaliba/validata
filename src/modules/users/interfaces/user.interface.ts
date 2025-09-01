@@ -1,4 +1,4 @@
-import type { Sale } from 'src/modules/sales/entities/sale.entity';
+import type { Sale } from '../../sales/entities/sale.entity';
 import { UserType } from '../../auth/dto/register.dto';
 
 export interface IUser {

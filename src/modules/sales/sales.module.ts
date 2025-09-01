@@ -6,8 +6,8 @@ import { UsersModule } from '../users/users.module';
 import { Sale } from './entities/sale.entity';
 import { SaleItem } from './entities/sale-item.entity';
 import { SaleRepository } from './repositories/sale.repository';
-import { SaleService } from './services/sale.service';
-import { SaleController } from './controllers/sales.controller';
+import { SaleService } from './sale.service';
+import { SaleController } from './sales.controller';
 import { SaleItemRepository } from './repositories/sale-item.repository';
 
 @Module({

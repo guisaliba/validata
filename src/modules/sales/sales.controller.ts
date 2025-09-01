@@ -10,14 +10,14 @@ import {
   ParseIntPipe,
   UseInterceptors,
 } from '@nestjs/common';
-import { SaleService } from '../services/sale.service';
-import { CreateSaleDto } from '../dto/create-sale.dto';
-import { SaleAnalyticsDto } from '../dto/sale-analytics-dto';
-import { SalesSummaryDto } from '../dto/sales-summary.dto';
-import { ProductSalesDto } from '../dto/product-sales.dto';
-import { BarcodeScanResponseDto } from '../../products/dto/barcode-scan-response.dto';
-import { Sale } from '../entities/sale.entity';
-import { TransactionInterceptor } from '../../../common/transaction.interceptor';
+import { SaleService } from './sale.service';
+import { CreateSaleDto } from './dto/create-sale.dto';
+import { SaleAnalyticsDto } from './dto/sale-analytics-dto';
+import { SalesSummaryDto } from './dto/sales-summary.dto';
+import { ProductSalesDto } from './dto/product-sales.dto';
+import { BarcodeScanResponseDto } from '../products/dto/barcode-scan-response.dto';
+import { Sale } from './entities/sale.entity';
+import { TransactionInterceptor } from '../../common/transaction.interceptor';
 
 @Controller('sales')
 export class SaleController {

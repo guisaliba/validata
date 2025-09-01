@@ -2,11 +2,11 @@ import { Injectable, Scope, Inject } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { DataSource, IsNull, LessThanOrEqual, Like } from 'typeorm';
 import { Request } from 'express';
-import { Product } from '../entities/product.entity';
-import { CreateProductDto } from '../dto/create-product.dto';
-import { UpdateProductDto } from '../dto/update-product.dto';
-import { IProductRepository } from '../interfaces/product.interface';
-import { BaseRepository } from '../../../common/base-repository';
+import { Product } from './entities/product.entity';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
+import { IProductRepository } from './interfaces/product.interface';
+import { BaseRepository } from '../../common/base-repository';
 
 @Injectable({ scope: Scope.REQUEST })
 export class ProductRepository

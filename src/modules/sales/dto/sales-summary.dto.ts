@@ -1,4 +1,4 @@
-import type { TopSellingProductDto } from 'src/modules/products/dto/top-selling-product.dto';
+import type { TopSellingProductDto } from '../../products/dto/top-selling-product.dto';
 
 export class SalesSummaryDto {
   startDate: Date;

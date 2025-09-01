@@ -1,4 +1,4 @@
-import type { StockForSaleDto } from 'src/modules/stocks/dto/stock-for-sale.dto';
+import type { StockForSaleDto } from '../../stocks/dto/stock-for-sale.dto';
 
 export class BarcodeScanResponseDto {
   productId: string;

@@ -11,7 +11,7 @@ import {
 } from 'typeorm';
 import { Product } from '../../products/entities/product.entity';
 import { Sale } from './sale.entity';
-import { Stock } from 'src/modules/stocks/entities/stock.entity';
+import { Stock } from '../../stocks/entities/stock.entity';
 import { IsUUID, IsNotEmpty, IsNumber, IsPositive, Min } from 'class-validator';
 
 @Entity()

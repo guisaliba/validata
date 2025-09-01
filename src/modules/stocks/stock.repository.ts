@@ -6,13 +6,13 @@ import {
   MoreThan,
   type EntityManager,
 } from 'typeorm';
-import { Stock } from '../entities/stock.entity';
-import { BaseRepository } from 'src/common/base-repository';
+import { Stock } from './entities/stock.entity';
+import { BaseRepository } from '../../common/base-repository';
 import { REQUEST } from '@nestjs/core';
 import type { Request } from 'express';
-import type { IStockRepository } from '../interfaces/stock.interface';
-import type { CreateStockDto } from '../dto/create-stock.dto';
-import type { UpdateStockDto } from '../dto/update-stock.dto';
+import type { IStockRepository } from './interfaces/stock.interface';
+import type { CreateStockDto } from './dto/create-stock.dto';
+import type { UpdateStockDto } from './dto/update-stock.dto';
 
 @Injectable({ scope: Scope.REQUEST })
 export class StockRepository

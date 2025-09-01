@@ -4,23 +4,23 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateSaleDto } from '../dto/create-sale.dto';
-import { Sale } from '../entities/sale.entity';
-import { SaleItem } from '../entities/sale-item.entity';
-import { StockService } from 'src/modules/stocks/services/stock.service';
-import { SaleRepository } from '../repositories/sale.repository';
-import { SaleItemRepository } from '../repositories/sale-item.repository';
+import { CreateSaleDto } from './dto/create-sale.dto';
+import { Sale } from './entities/sale.entity';
+import { SaleItem } from './entities/sale-item.entity';
+import { StockService } from '../stocks/stock.service';
+import { SaleRepository } from './repositories/sale.repository';
+import { SaleItemRepository } from './repositories/sale-item.repository';
 import { DataSource, EntityManager } from 'typeorm';
-import { ProductService } from 'src/modules/products/services/product.service';
-import { UserService } from 'src/modules/users/services/user.service';
-import { SalesSummaryDto } from '../dto/sales-summary.dto';
-import { ProductSalesDto } from '../dto/product-sales.dto';
-import { SaleAnalyticsDto } from '../dto/sale-analytics-dto';
-import { ISaleService } from '../interfaces/sale.interface';
-import { BarcodeScanResponseDto } from 'src/modules/products/dto/barcode-scan-response.dto';
-import { StockForSaleDto } from 'src/modules/stocks/dto/stock-for-sale.dto';
-import { CreateSaleItemDto } from '../dto/create-sale-item.dto';
-import { ProductSalesData } from '../interfaces/product-sales-data.interface';
+import { ProductService } from '../products/product.service';
+import { UserService } from '../users/user.service';
+import { SalesSummaryDto } from './dto/sales-summary.dto';
+import { ProductSalesDto } from './dto/product-sales.dto';
+import { SaleAnalyticsDto } from './dto/sale-analytics-dto';
+import { ISaleService } from './interfaces/sale.interface';
+import { BarcodeScanResponseDto } from '../products/dto/barcode-scan-response.dto';
+import { StockForSaleDto } from '../stocks/dto/stock-for-sale.dto';
+import { CreateSaleItemDto } from './dto/create-sale-item.dto';
+import { ProductSalesData } from './interfaces/product-sales-data.interface';
 
 @Injectable()
 export class SaleService implements ISaleService {

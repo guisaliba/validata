@@ -3,15 +3,15 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Product } from '../entities/product.entity';
-import { CreateProductDto } from '../dto/create-product.dto';
-import { UpdateProductDto } from '../dto/update-product.dto';
-import { IProductService } from '../interfaces/product.interface';
-import { ProductRepository } from '../repositories/product.repository';
-import type { ProductAnalyticsDto } from '../dto/product-analytics.dto';
-import type { ProductPricingDto } from '../dto/product-pricing.dto';
-import type { ProductInventoryDto } from '../dto/product-inventory.dto';
-import type { Stock } from 'src/modules/stocks/entities/stock.entity';
+import { Product } from './entities/product.entity';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
+import { IProductService } from './interfaces/product.interface';
+import { ProductRepository } from './product.repository';
+import type { ProductAnalyticsDto } from './dto/product-analytics.dto';
+import type { ProductPricingDto } from './dto/product-pricing.dto';
+import type { ProductInventoryDto } from './dto/product-inventory.dto';
+import type { Stock } from '../stocks/entities/stock.entity';
 
 @Injectable()
 export class ProductService implements IProductService {
